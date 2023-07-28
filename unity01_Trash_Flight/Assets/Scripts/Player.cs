@@ -7,6 +7,18 @@ public class Player : MonoBehaviour
     [SerializeField]    // Inspector에서 값을 넣을 수 있도록 해줌
     private float moveSpeed;    // Inspector에 Move Spped가 생김
 
+    [SerializeField]
+    private GameObject[] weapons;
+    private int weaponIndex = 0;
+
+    [SerializeField]
+    private Transform shootTransform;
+
+    [SerializeField]
+    private float shootInterval = 0.05f;    // 다시 공격할 수 있는 시간 간격
+
+    private float lastShotTime = 0f;    // 마지막 공격한 시간
+
     // Update is called once per frame
     void Update()
     {
@@ -33,8 +45,52 @@ public class Player : MonoBehaviour
         float toX = Mathf.Clamp(mousePos.x, -2.35f, 2.35f); // 보통값, 최소값, 최대값
         transform.position = new Vector3(toX, transform.position.y, transform.position.z);   // x값 마우스 위치에 따라 변경, y,z는 그대로 유지
 
+        if (GameManager.instance.isGameOver == false)
+        {
+            Shoot();
+        }
+    }
+    void Shoot()
+    {
+        if(Time.time - lastShotTime > shootInterval) 
+        {
+            // 게임 오브젝트를 만들어줌
+            Instantiate(weapons[weaponIndex], shootTransform.position, Quaternion.identity);  // 객체, 위치, 회전
+            lastShotTime = Time.time;
+        }
+    }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Boss")
+        {
+            GameManager.instance.SetGameOver();
+            Destroy(gameObject);    // 플레니어 제거
+        }
+        else if (other.gameObject.tag =="Coin")
+        {
+            GameManager.instance.IncreaseCoin();
+            Destroy(other.gameObject);
+        }
+    }
 
-
+    public void Upgrade()
+    {
+        weaponIndex += 1;    
+        if (weaponIndex >= weapons.Length)
+        {
+            weaponIndex = weapons.Length - 1;
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
