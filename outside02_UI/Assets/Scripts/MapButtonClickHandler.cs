@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,8 @@ public class MapButtonClickHandler : MonoBehaviour
     [SerializeField]
     string cctvURL;
     string pinMapName;
+
+    static int count = 0;
 
     private void Awake()
     {
@@ -19,9 +22,13 @@ public class MapButtonClickHandler : MonoBehaviour
             return; // EventManager.Instance가 null인 경우에는 이후 코드를 실행하지 않고 종료
         }
 
-        // 이제 EventManager.Instance가 null이 아님을 보장하고 이벤트를 구독
-        EventManager.Instance.OnPanelDestructionResponsed += DestructPanel;
-        Debug.Log("이제 EventManager.Instance가 null이 아님을 보장하고 이벤트를 구독");
+        count++;
+        if (count < 2)
+        {
+            // 이제 EventManager.Instance가 null이 아님을 보장하고 이벤트를 구독
+            EventManager.Instance.OnPanelDestructionResponsed += DestructPanel;
+            Debug.Log("이제 EventManager.Instance가 null이 아님을 보장하고 이벤트를 구독");
+        }
     }
     // 버튼 클릭 이벤트 처리 함수
     private void OnMouseDown()
