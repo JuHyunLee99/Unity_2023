@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
-using System.Security.Cryptography;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 using TMPro;
-
-using MySql.Data;
 using MySql.Data.MySqlClient;
-using Unity.VisualScripting;
-using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 public class Btn_Login_MySQL : MonoBehaviour
 {
@@ -111,9 +100,9 @@ public class Btn_Login_MySQL : MonoBehaviour
                         rdr[2].ToString() == "0")
                     {
                         // 로그인 성공 시 처리
-                        SceneManager.LoadScene("UI_SC");
-                        SceneManager.LoadScene("INSIDE_SC", LoadSceneMode.Additive);
-                        SceneManager.UnloadSceneAsync("LOGIN_SC");
+                        SceneManager.LoadScene("UI_Scene");
+                        SceneManager.LoadScene("Inside_Scene", LoadSceneMode.Additive);
+                        SceneManager.UnloadSceneAsync("Login_Scene");
                         break; // 로그인 성공했으므로 더 이상 확인할 필요가 없으므로 반복문을 종료
                     }
                     continue;
