@@ -14,11 +14,12 @@ public class VLC_Player : MonoBehaviour
     public Button playButton;
     public Button pauseButton;
     public Button closeButton;
+    public Text title;
 
     Texture2D _vlcTexture = null;   //This is the texture libVLC writes to directly.
     public RenderTexture texture = null;    //We copy it into this texture which we actually use in unity.
 
-    public MapPinInfo mapPinInfo;
+    public MapPinInfo mapPinInfo;   // cctv 정보  // UIPanelManager.cs에서 설정함.
 
     public bool flipTextureX = true; //No particular reason you'd need this but it is sometimes useful
     public bool flipTextureY = true; //Set to false on Android, to true on Windows
@@ -71,12 +72,9 @@ public class VLC_Player : MonoBehaviour
         playButton.onClick.AddListener(() => { Play(); });
         closeButton.onClick.AddListener(() => { close(); });
 
-    }
-
-    private void OnEnable()
-    {
         if(mapPinInfo != null)
         {
+            title.text = mapPinInfo.locationName;
             // Play On Start
             Open(mapPinInfo.cctvURL);
             // pause/playButton 초기 설정
@@ -86,6 +84,10 @@ public class VLC_Player : MonoBehaviour
         {
             Debug.Log("mapPinInfo 못받음");
         }
+    }
+
+    private void OnEnable()
+    {
         
     }
 
