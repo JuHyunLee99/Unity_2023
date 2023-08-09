@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using MySql.Data.MySqlClient;
+using UnityEngine.UI;
 
 public class Btn_Login_MySQL : MonoBehaviour
 {
     // 데이터베이스 연결에 필요한 정보를 설정합니다.
-    public string db_Address = "210.119.12.100";  // 데이터베이스 서버 IP 주소
+    public string db_Address = "210.119.12.112";  // 데이터베이스 서버 IP 주소
     public string db_Port = "10000";        // 데이터베이스 포트 번호
     public string db_Id = "pi";          // 데이터베이스 접속 ID
     public string db_Pw = "12345";         // 데이터베이스 접속 비밀번호
